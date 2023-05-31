@@ -48,7 +48,7 @@ http.get('/labels').then(result => {
 
     <!-- copyright -->
     <div style="text-align: center; color: #a1a1a1; margin-bottom: 20px">
-      © bibi 2023
+      Copyright 2023. bibi
     </div>
   </div>
 </template>
