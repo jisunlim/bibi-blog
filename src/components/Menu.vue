@@ -1,19 +1,29 @@
 <script setup lang="ts">
 import {ref} from "vue";
+import type { Ref } from 'vue'
 import http from "@/utils/httpUtil";
 
-const greeting = '안녕하세요. 비비입니다 :)'
-const activeName = ref('')
+const greeting = '안녕하세요. 비비입니다 :)';
+const activeName = ref('');
 
-const categoryGroup = [
-  { type: 'danger', name: 'Security' },
-  { type: '', name: 'Develop' },
-  { type: 'warning', name: 'ETC' }
-]
+let categoryGroup: Ref<string[]> = ref([]);
+let categories = ref([]);
 
-let categories = ref([])
+function getCategoryGroup(labels: [{description: string}]) {
+  let labelSet = new Set<string>();
+
+  labels.forEach(label => {
+    const regex = /^\[.*\]/g;
+    const description = label.description.match(regex);
+    if (description)
+      labelSet.add(description[0].slice(1, -1));
+  })
+  return Array.from(labelSet).sort((a: string, b: string) => { return a === 'ETC' ? 1 : -1 });
+}
+
 http.get('/labels').then(result => {
-  categories.value = result.data
+  categories.value = result.data;
+  categoryGroup.value = getCategoryGroup(result.data);
 })
 </script>
 
@@ -37,8 +47,8 @@ http.get('/labels').then(result => {
 
       <!-- category -->
       <div v-for="group in categoryGroup" style="text-align: center; margin-top: 20px">
-        <el-tag :type="group.type" effect="plain" round>{{ group.name }}</el-tag>
-        <div v-for="category in categories.filter(el => el.description.startsWith('[' + group.name + ']'))">
+        <el-tag type="danger" effect="plain" round>{{ group }}</el-tag>
+        <div v-for="category in categories.filter(el => el.description.startsWith('[' + group + ']'))">
           <div :class="['category', { 'active': activeName === category.name }]" @click="activeName = category.name">
             {{ category.name }}
           </div>
