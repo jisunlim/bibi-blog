@@ -39,15 +39,33 @@
 
   --main-content: #213547;
   --sub-content: #717171;
+
+  --main-back-color: floralwhite;
+  --highlight-color: #e6ff8d;
 }
 
 body {
   margin: 0;
 }
 
-h1 {
-  font-size: 20px;
-  font-weight: 500;
-  margin: 0;
-  font-family: Maplestory, serif;
+// TODO: CSS 추가 수정 필요
+$theme-name: 'default-theme';
+.#{$theme-name} {
+  font-family: NanumGothic, sans-serif;
+
+  h1 {
+    font-size: 20px !important;
+  }
+
+  h2 {
+    font-size: 16px !important;
+  }
+
+  h3 {
+    font-size: 14px !important;
+  }
+
+  ul>li, ul, p {
+    font-size: 13px;
+  }
 }

@@ -2,8 +2,8 @@
 import {computed, onMounted, ref, watch} from "vue";
 import http from "@/utils/httpUtil";
 import { useRoute } from 'vue-router';
-import Milkdown from '../components/MilkdownEditor.vue';
-import { MilkdownProvider } from '@milkdown/vue';
+import {MdPreview} from "md-editor-v3";
+import "md-editor-v3/lib/preview.css";
 
 const route = useRoute();
 const id = computed(() => route.params.id);
@@ -24,15 +24,17 @@ onMounted(() => getContent(id.value));
 </script>
 
 <template>
-  <h1>{{ content.title }}</h1>
-
-  <MilkdownProvider>
-    <Milkdown :content="content.body"/>
-  </MilkdownProvider>
-
-  <div>{{ content.label }}</div>
+  <h1 class="title">{{ content.title }}</h1>
+  <MdPreview editor-id="id" :model-value="content.body"/>
 </template>
 
-<style scoped>
-
+<style>
+.title {
+  font-size: 24px;
+  font-weight: 500;
+  width: fit-content;
+  margin: 10px 20px;
+  background: linear-gradient(to top, var(--highlight-color) 50%, transparent 50%);
+  font-family: Maplestory, serif;
+}
 </style>
