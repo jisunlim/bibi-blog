@@ -21,6 +21,11 @@ function getCategoryGroup(labels: [{description: string}]) {
   return Array.from(labelSet).sort((a: string, b: string) => { return a === 'ETC' ? 1 : -1 });
 }
 
+function onClickCategory(category: string) {
+  activeName.value = category;
+  location.href = '/#/category/' + category;
+}
+
 http.get('/labels').then(result => {
   categories.value = result.data;
   categoryGroup.value = getCategoryGroup(result.data);
@@ -49,7 +54,8 @@ http.get('/labels').then(result => {
       <div v-for="group in categoryGroup" style="text-align: center; margin-top: 20px">
         <el-tag type="danger" effect="plain" round>{{ group }}</el-tag>
         <div v-for="category in categories.filter(el => el.description.startsWith('[' + group + ']'))">
-          <div :class="['category', { 'active': activeName === category.name }]" @click="activeName = category.name">
+          <div :class="['category', { 'active': activeName === category.name }]"
+               @click="onClickCategory(category.name)">
             {{ category.name }}
           </div>
         </div>
