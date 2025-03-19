@@ -8,6 +8,7 @@ import SideMenu from './components/Menu.vue'
       <side-menu/>
     </el-aside>
 
+    <!-- test -->
     <el-container>
       <el-header class="header">
         🌵 Hello, This is Bibi's Blog 🌵
